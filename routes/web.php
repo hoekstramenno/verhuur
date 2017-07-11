@@ -16,3 +16,12 @@ Route::get('dates/{id}', 'DatesController@show');
 Route::get('dates/{id}/options', 'DatesOptionsController@create');
 Route::post('dates/{id}/options', 'DatesOptionsController@store');
 Route::post('options/{id}/bookings', 'OptionsBookingsController@store');
+
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return $request->user();
+});
+
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
