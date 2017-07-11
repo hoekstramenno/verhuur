@@ -10,7 +10,7 @@ use App\Option;
 use App\Booking;
 use App\Reservation;
 use Illuminate\Http\Request;
-use App\Billing\PaymentGateway;
+use App\Billing\FakePaymentGateway as PaymentGateway;
 
 class DatesOptionsController extends Controller
 {

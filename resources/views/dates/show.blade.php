@@ -33,8 +33,8 @@
                         </div>
                     </div>
                     <footer class="card-footer">
-                        <a class="card-footer-item" href="/dates/{{ $date->id }}/options">Doe een optie</a>
-                        <a class="card-footer-item" href="/dates">Terug</a>
+                        <a class="card-footer-item" href="/dates/{{ $date->id }}/options">{{ __('Option a date') }}</a>
+                        <a class="card-footer-item" href="/dates">{{ __('Back') }}</a>
                     </footer>
                 </div>
             </div>

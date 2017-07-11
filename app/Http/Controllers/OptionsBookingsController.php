@@ -10,7 +10,7 @@ use App\Booking;
 use App\Http\Requests\StoreBooking;
 use App\Reservation;
 use Illuminate\Http\Request;
-use App\Billing\PaymentGateway;
+use App\Billing\FakePaymentGateway as PaymentGateway;
 
 class OptionsBookingsController extends Controller
 {
