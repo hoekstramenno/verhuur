@@ -14,7 +14,6 @@ use App\Billing\PaymentGateway;
 
 class DatesOptionsController extends Controller
 {
-
     private $paymentGateway;
 
     public function __construct(PaymentGateway $paymentGateway)
@@ -38,7 +37,7 @@ class DatesOptionsController extends Controller
      */
     public function create()
     {
-        //
+        return view('dates.create', []);
     }
 
     /**

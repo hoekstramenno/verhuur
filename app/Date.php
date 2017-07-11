@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Status;
+use Carbon\Carbon;
 
 class Date extends Model
 {
@@ -67,6 +68,18 @@ class Date extends Model
     {
         return $query->where('status', $this::STATUS_AVAILABLE);
     }
+
+    /**
+     * Scope for status
+     *
+     * @param $query
+     * @return mixed
+     */
+    public function scopeFuture($query)
+    {
+        return $query->where('date_from', '>=', Carbon::yesterday());
+    }
+
 
     /**
      * Formatted date from attribute

@@ -1,9 +1,20 @@
+  // 1. Import the initial variables
+@import "node_modules/bulma//sass/utilities/initial-variables";
 
-// Fonts
-@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+// 2. Set your own initial variables
+// Update blue
+$blue: #72d0eb;
+  // Add pink
+$pink: #ffb3b3;
+  // Add a serif family
+$family-serif: "Merriweather", "Georgia", serif;
 
-// Variables
-@import "variables";
+  // 3. Set the derived variables
+  // Use the new pink as the primary color
+$primary: $pink;
+  // Use the existing orange as the danger color
+$danger: $orange;
+  // Use the new serif family
+$family-primary: $family-serif;
 
-// Bootstrap
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "node_modules/bulma/bulma";

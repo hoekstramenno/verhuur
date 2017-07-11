@@ -15,7 +15,8 @@ class DatesController extends Controller
      */
     public function index()
     {
-        //
+        $dates = Date::published()->future()->get();
+        return view('dates.index', ['dates' => $dates]);
     }
 
     /**

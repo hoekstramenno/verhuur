@@ -14,6 +14,48 @@ class ViewDataListingTest extends TestCase
 {
     use DatabaseMigrations;
 
+    /** @test */
+    function user_can_view_all_available_dates()
+    {
+        factory(Date::class)->states('published')->create([
+            'date_from' => Carbon::parse('+1 week'),
+            'date_to' => Carbon::parse('+1 week'),
+            'price' => 520,
+            'status' => Date::STATUS_AVAILABLE
+        ]);
+
+        $optionedDate = factory(Date::class)->states('published')->create([
+            'date_from' => Carbon::parse('+1 week'),
+            'date_to' => Carbon::parse('+1 week'),
+            'price' => 520,
+            'status' => Date::STATUS_AVAILABLE
+        ]);
+
+        factory(Option::class)->create(['date_id' => $optionedDate->id]);
+
+        $bookedDate = factory(Date::class)->states('published')->create([
+            'date_from' => Carbon::parse('+1 week'),
+            'date_to' => Carbon::parse('+1 week'),
+            'price' => 520,
+            'status' => Date::STATUS_AVAILABLE
+        ]);
+
+        $option = factory(Option::class)->create(['date_id' => $bookedDate->id]);
+        factory(Booking::class)->create(['date_id' => $bookedDate->id, 'option_id' => $option->id]);
+
+        // View the data listing
+        $response = $this->get('/dates');
+
+        // Assert
+        // See the data details
+        $response->assertStatus(200);
+        $response->assertSee('Beschikbaar');
+        $response->assertSee('1 optie genomen');
+        $response->assertSee('Geboekt');
+
+
+    }
+
     /** @test **/
     function user_can_view_a_published_date()
     {

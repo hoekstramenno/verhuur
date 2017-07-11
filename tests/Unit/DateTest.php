@@ -74,6 +74,28 @@ class DateTest extends TestCase
     }
 
     /** @test */
+    public function cannot_see_dates_from_the_past()
+    {
+        $publishedDateA = factory(Date::class)->create([
+            'date_from' => Carbon::parse('-1 week')
+        ]);
+
+        $publishedDateB = factory(Date::class)->create([
+            'date_from' => Carbon::parse('today')
+        ]);
+
+        $publishedDateC = factory(Date::class)->create([
+            'date_from' => Carbon::parse('+1 week')
+        ]);
+
+        $publishedDates = Date::future()->get();
+
+        $this->assertFalse($publishedDates->contains($publishedDateA));
+        $this->assertTrue($publishedDates->contains($publishedDateB));
+        $this->assertTrue($publishedDates->contains($publishedDateC));
+    }
+
+    /** @test */
     function can_option_an_date()
     {
         $date = factory(Date::class)->create();
