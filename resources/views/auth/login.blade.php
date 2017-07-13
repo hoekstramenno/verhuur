@@ -4,6 +4,7 @@
     <div class="container">
         <div class="content">
             <div class="column is-half is-offset-one-quarter">
+
                 <h1>{{ __('Login') }}</h1>
                 <form class="form-horizontal" role="form" method="POST" action="{{ route('login') }}">
                     {{ csrf_field() }}
