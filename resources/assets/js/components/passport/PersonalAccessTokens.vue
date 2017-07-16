@@ -63,7 +63,6 @@
             <div class="modal-background"></div>
             <div class="modal-card">
                 <header class="modal-card-head">
-
                     <p class="modal-card-title">
                         Create Token
                     </p>
@@ -71,7 +70,7 @@
                 </header>
                 <section class="modal-card-body">
                     <!-- Form Errors -->
-                    <div class="alert alert-danger" v-if="form.errors.length > 0">
+                    <div class="alert has-danger" v-if="form.errors.length > 0">
                         <p><strong>Whoops!</strong> Something went wrong!</p>
                         <br>
                         <ul>
