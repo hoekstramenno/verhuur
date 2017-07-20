@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Billing\PaymentFailedException;
 use App\Exceptions\NoBookingsLeftException;
@@ -12,7 +12,7 @@ use App\Reservation;
 use Illuminate\Http\Request;
 use App\Billing\FakePaymentGateway as PaymentGateway;
 
-class DatesOptionsController extends Controller
+class DatesOptionsController extends ApiController
 {
 
     /**
@@ -26,14 +26,37 @@ class DatesOptionsController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Store a newly created resource in storage.
      *
+     * @param  integer  $dateId
      * @return \Illuminate\Http\Response
      */
-    public function create($dateId)
+    public function store(StoreOption $request, $dateId)
     {
-        //$date = Date::published()->available()->findOrFail($dateId);
-        //return view('options.create', ['date' => $date]);
+        $date = Date::published()->available()->findOrFail($dateId);
+
+        if ($date->bookingsRemaining() == 0) {
+            return response()->json([], 422);
+        }
+
+        try {
+
+            // Is it still available
+            if ($date->isStillAvailable()) {
+                $reservation = $date->createReservation($date, request('pax'), request('email'));
+
+                // Create option and charge
+                $option = $reservation->toOption($this->paymentGateway, request('payment_token'));
+
+                return response()->json($option->toArray(), 201);
+            }
+
+        } catch(PaymentFailedException $e) {
+            return response()->json([], 422);
+        } catch(NoBookingsLeftException $e) {
+            return response()->json([], 422);
+        }
+
     }
 
     /**

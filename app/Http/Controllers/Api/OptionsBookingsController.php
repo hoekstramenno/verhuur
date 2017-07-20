@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Billing\PaymentFailedException;
 use App\Exceptions\NoBookingsLeftException;
 use App\Date;
-use App\Http\Requests\StoreOption;
 use App\Option;
 use App\Booking;
+use App\Http\Requests\StoreBooking;
 use App\Reservation;
 use Illuminate\Http\Request;
 use App\Billing\FakePaymentGateway as PaymentGateway;
 
-class DatesOptionsController extends Controller
+class OptionsBookingsController extends ApiController
 {
 
     /**
@@ -30,10 +30,37 @@ class DatesOptionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($dateId)
+    public function create()
     {
-        //$date = Date::published()->available()->findOrFail($dateId);
-        //return view('options.create', ['date' => $date]);
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  integer  $optionId
+     * @return \Illuminate\Http\Response
+     */
+    public function store(StoreBooking $request, $optionId)
+    {
+        $option = Option::findOrFail($optionId);
+        $date = Date::published()->findOrFail($option->date_id);
+
+        if ($date->bookingsRemaining() == 0) {
+            return response()->json([], 422);
+        }
+
+        try {
+            // Is it still available // Create booking
+            if ($date->isStillAvailable()) {
+                $booking = Booking::forOption($option);
+                return response()->json($booking->toArray(), 201);
+            }
+
+        } catch(NoBookingsLeftException $e) {
+            return response()->json([], 422);
+        }
+
     }
 
     /**

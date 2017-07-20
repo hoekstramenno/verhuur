@@ -15,8 +15,8 @@ class DatesController extends Controller
      */
     public function index()
     {
-        $dates = Date::published()->future()->get();
-        return view('dates.index', ['dates' => $dates]);
+//        $dates = Date::published()->future()->get();
+//        return view('dates.index', ['dates' => $dates]);
     }
 
     /**
@@ -30,17 +30,6 @@ class DatesController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -48,8 +37,8 @@ class DatesController extends Controller
      */
     public function show($id)
     {
-        $date = Date::published()->findOrFail($id);
-        return view('dates.show', ['date' => $date]);
+//        $date = Date::published()->findOrFail($id);
+//        return view('dates.show', ['date' => $date]);
     }
 
     /**

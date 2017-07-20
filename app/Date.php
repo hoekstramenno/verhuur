@@ -2,12 +2,15 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Status;
 use Carbon\Carbon;
+use App\ApiHelpers\Filters\Filterable;
+use Illuminate\Database\Eloquent\Model;
 
 class Date extends Model
 {
+    use Filterable;
+
     const STATUS_AVAILABLE    = 1;
     const STATUS_BOOKED = 2;
     const STATUS_NOT_AVAILABLE  = 3;
@@ -234,6 +237,12 @@ class Date extends Model
         return isset($list[$this->status])
             ? $list[$this->status]
             : $this->status;
+    }
+
+    public function getLabel($key)
+    {
+        $list = $this->listStatus();
+        return $list[$key];
     }
 
 }

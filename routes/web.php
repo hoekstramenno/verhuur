@@ -11,11 +11,7 @@
 |
 */
 Log::useFiles('php://stderr');
-Route::get('dates', 'DatesController@index');
-Route::get('dates/{id}', 'DatesController@show');
-Route::get('dates/{id}/options', 'DatesOptionsController@create');
-Route::post('dates/{id}/options', 'DatesOptionsController@store');
-Route::post('options/{id}/bookings', 'OptionsBookingsController@store');
+
 
 Auth::routes();
 
