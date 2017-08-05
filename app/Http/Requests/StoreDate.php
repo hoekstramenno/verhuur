@@ -4,9 +4,8 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateDate extends FormRequest
+class StoreDate extends FormRequest
 {
-
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -25,11 +24,11 @@ class UpdateDate extends FormRequest
     public function rules()
     {
         return [
-            'date_from' => 'sometimes|date|date_format:Y-m-d H:i:s|after:tomorrow',
-            'date_to' => 'sometimes|date|date_format:Y-m-d H:i:s|after:date_from',
+            'date_from' => 'required|date|date_format:Y-m-d H:i:s|after:tomorrow',
+            'date_to' => 'required|date|date_format:Y-m-d H:i:s|after:date_from',
             'published_at' => 'sometimes|date|date_format:Y-m-d H:i:s',
-            'price' => 'sometimes|numeric',
-            'status' => 'sometimes|numeric'
+            'price' => 'required|numeric',
+            'status' => 'required|numeric'
         ];
     }
 }

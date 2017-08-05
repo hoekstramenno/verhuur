@@ -36,20 +36,4 @@ class DatesFilter extends Filter
 
         return $this->builder->whereIn('id', $articleIds);
     }
-
-    /**
-     * Filter by tag name.
-     * Get all the articles tagged by the given tag name.
-     *
-     * @param $name
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    protected function tag($name)
-    {
-        $tag = Tag::whereName($name)->first();
-
-        $articleIds = $tag ? $tag->articles()->pluck('article_id')->toArray() : [];
-
-        return $this->builder->whereIn('id', $articleIds);
-    }
 }

@@ -1,12 +1,14 @@
 <?php namespace App\Http\Controllers\Api;
 
 use App\Date;
+use App\Http\Requests\UpdateDate;
 use Illuminate\Http\Request;
 use App\ApiHelpers\Filters\DatesFilter;
-use App\Http\Requests\Api\CreateArticle;
-use App\Http\Requests\Api\UpdateArticle;
+//use App\Http\Requests\Api\CreateArticle;
+//use App\Http\Requests\Api\UpdateArticle;
 use App\ApiHelpers\Transformers\DatesTransformer;
 use App\ApiHelpers\Paginate\Paginate as Paginate;
+use App\Http\Requests\StoreDate;
 
 class DatesController extends ApiController
 {
@@ -21,16 +23,6 @@ class DatesController extends ApiController
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    //public function index()
-    //{
-        //return Date::published()->future()->get();
-    //}
-
-    /**
      * Get all the dates.
      *
      * @param DatesFilter $filter
@@ -43,24 +35,32 @@ class DatesController extends ApiController
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param StoreDate $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function create()
+    public function store(StoreDate $request)
     {
-        //
-    }
+        $user = auth()->user();
+        //$userId = $user->id;
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        // TEST ///
+        $userId = 1;
+
+        if ( ! is_null($user)) {
+            $userId = $user->id;
+        }
+        // END TEST//
+
+        $date = Date::create([
+            'date_from' => $request->input('date_from'),
+            'date_to' => $request->input('date_to'),
+            'price' => $request->input('price'),
+            'published_at' => $request->input('published_at'),
+            'admin_id' => $userId,
+            'status' => 1
+        ]);
+
+        return $this->respondWithTransformer($date);
     }
 
     /**
@@ -71,31 +71,22 @@ class DatesController extends ApiController
      */
     public function show($id)
     {
-        $date = Date::published()->findOrFail($id);
+        $date = Date::published()->future()->findOrFail($id);
         return $this->respondWithTransformer($date);
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param UpdateDate $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function edit($id)
+    public function update(UpdateDate $request, $id)
     {
-        //
-    }
+        $date = Date::published()->findOrFail($id);
+        $date->fill($request->all());
+        $date->save();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+        return $this->respondWithTransformer($date);
     }
 
     /**
@@ -104,7 +95,7 @@ class DatesController extends ApiController
      */
     public function destroy($id)
     {
-        $date = Date::published()->findOrFail($id);
+        $date = Date::findOrFail($id);
         $date->delete();
         return $this->respondSuccess();
     }

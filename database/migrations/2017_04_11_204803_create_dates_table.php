@@ -19,6 +19,7 @@ class CreateDatesTable extends Migration
             $table->datetime('date_to');
             $table->integer('price');
             $table->string('status');
+            $table->integer('admin_id');
             $table->datetime('published_at')->nullable();
             $table->timestamps();
         });

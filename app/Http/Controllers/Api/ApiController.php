@@ -75,7 +75,7 @@ class ApiController extends Controller
      */
     protected function respondSuccess()
     {
-        return $this->respond(null);
+        return $this->respond(['message' => 'Success'], 200);
     }
 
     /**

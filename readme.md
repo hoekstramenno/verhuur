@@ -8,13 +8,16 @@ Hieronder een globaal overzicht wat er nog moet gebeuren.
 - Op basis van inwisselbare modules aan de hand van Dependency Injection.
 - Goede documentatie van de routes
 - Als in de toekomst dit systeem vervangen wordt en duidelijke heldere uitleg wat er moet gebeuren.
+- Teksten moeten multi-talig zijn
 
 ### Todo
 
 #### Eerste fase
-- Datumbeheer (CRUD)
-- Massa datum input (ik wil alle weekenden erin zetten van nu tot 2018)
-- Formulier voor gebruiker om een optie neer te zetten
+- API - Datumbeheer (CRUD) - Done
+- API - Optiebeheer (CRUD)
+- Api - Bookingbeheer (CRUD)
+- App - Massa datum input (ik wil alle weekenden erin zetten van nu tot 2018)
+- App - Formulier voor gebruiker om een optie neer te zetten
 - Mail naar beheerder met info over optie
 - Mail met samenvatting naar gebruiker
 - Overzicht van alle opties
