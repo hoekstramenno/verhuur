@@ -36,4 +36,5 @@ class DatesFilter extends Filter
 
         return $this->builder->whereIn('id', $articleIds);
     }
+
 }

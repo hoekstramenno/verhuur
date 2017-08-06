@@ -13,10 +13,10 @@ Hieronder een globaal overzicht wat er nog moet gebeuren.
 ### Todo
 
 #### Eerste fase
-- API - Datumbeheer (CRUD) - Done
+- Done - API - Datumbeheer (CRUD)
 - API - Optiebeheer (CRUD)
 - Api - Bookingbeheer (CRUD)
-- App - Massa datum input (ik wil alle weekenden erin zetten van nu tot 2018)
+- Done - App - Massa datum input (ik wil alle weekenden erin zetten van nu tot 2018)
 - App - Formulier voor gebruiker om een optie neer te zetten
 - Mail naar beheerder met info over optie
 - Mail met samenvatting naar gebruiker

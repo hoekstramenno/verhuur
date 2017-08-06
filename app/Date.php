@@ -6,6 +6,8 @@ use App\Status;
 use Carbon\Carbon;
 use App\ApiHelpers\Filters\Filterable;
 use Illuminate\Database\Eloquent\Model;
+use App\Http\Requests\MultiStoreDate;
+use Illuminate\Support\Collection;
 
 class Date extends Model
 {
@@ -239,11 +241,47 @@ class Date extends Model
             : $this->status;
     }
 
+    /**
+     * Get humanreadable label of the statuses
+     *
+     * @param $key
+     * @return mixed
+     */
     public function getLabel($key)
     {
         $list = $this->listStatus();
         return $list[$key];
     }
+
+
+    /**
+     * Create new Date for a datarange
+     *
+     * @param MultiStoreDate $request
+     * @param $userId
+     * @param $dates
+     * @return static
+     */
+    public static function createNewDatesFromRange(MultiStoreDate $request, $userId, $dates)
+    {
+        $datesCollection = Collection::make();
+        foreach ($dates as $date) {
+            $newDate = Date::create([
+                'date_from' => $date['start'],
+                'date_to' => $date['end'],
+                'price' => $request->input('price'),
+                'published_at' => $request->input('published_at'),
+                'admin_id' => $userId,
+                'status' => ($request->input('status') ?: 1)
+            ]);
+
+            $datesCollection->push($newDate);
+        }
+
+        return $datesCollection;
+    }
+
+
 
 
 }

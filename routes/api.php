@@ -21,18 +21,18 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('login', 'Api\Auth\LoginController@login');
 Route::post('refresh', 'Api\Auth\LoginController@refresh');
 
+Route::resource('dates', 'Api\DatesController', [
+    'except' => [
+        'create',
+        'edit'
+    ]
+]);
+Route::post('dates/multi', 'Api\DatesController@multistore');
 
-    //Route::get('dates', 'Api\DatesController@index');
-    //Route::post('dates', 'Api\DatesController@store');
-//    Route::delete('dates/{id}', 'Api\DatesController@destroy');
-
-    Route::resource('dates', 'Api\DatesController', ['except' => ['create', 'edit']]);
-
-
-    Route::get('dates/{id}/options', 'Api\DatesOptionsController@create');
-    Route::post('dates/{id}/options', 'Api\DatesOptionsController@store');
-    Route::post('options/{id}/bookings', 'Api\OptionsBookingsController@store');
-    Route::post('logout', 'Api\Auth\LoginController@logout');
+Route::get('dates/{id}/options', 'Api\DatesOptionsController@create');
+Route::post('dates/{id}/options', 'Api\DatesOptionsController@store');
+Route::post('options/{id}/bookings', 'Api\OptionsBookingsController@store');
+Route::post('logout', 'Api\Auth\LoginController@logout');
 
 
 //Route::middleware(['auth:api'])->group(function () {
