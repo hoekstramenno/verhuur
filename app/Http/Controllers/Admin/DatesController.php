@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Date;
 use Illuminate\Http\Request;
 
 
-class DatesController extends Controller
+class DatesController extends AdminController
 {
 
     public function __construct()
@@ -21,7 +21,7 @@ class DatesController extends Controller
      */
     public function index()
     {
-        return view('dates.index');
+        return view('admin.dates.index');
 //        $dates = Date::published()->future()->get();
 //        return view('dates.index', ['dates' => $dates]);
     }

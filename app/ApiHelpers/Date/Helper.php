@@ -41,8 +41,8 @@ class Helper
         for ($date = $startDateClone; $date->lte($endDate); $date->addDay()) {
             if ($date->isSaturday()) {
                 $dates[] = [
-                    'start' => $date->toDateString(),
-                    'end' => $date->addDay()->toDateString(),
+                    'start' => $date->toDateTimeString(),
+                    'end' => $date->addDay()->toDateTimeString(),
                 ];
             }
         }
@@ -61,7 +61,6 @@ class Helper
         $startDate = $startDate->timestamp;
         $endDate = $endDate->timestamp;
         $targetdate = $targetDate->timestamp;
-
 
         // Check that user date is between start & end
         return (($targetdate >= $startDate) && ($targetdate <= $endDate));

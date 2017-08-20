@@ -12,11 +12,12 @@
 */
 Log::useFiles('php://stderr');
 
-
 Auth::routes();
 
+Route::get('/', 'DatesController@index');
 
 Route::prefix('admin')->group(function () {
-    Route::get('home', 'HomeController@index');
-    Route::get('api', 'HomeController@api');
+    Route::get('home', 'Admin\HomeController@index');
+    Route::get('dates', 'Admin\DatesController@index');
+    Route::get('api', 'Admin\HomeController@api');
 });

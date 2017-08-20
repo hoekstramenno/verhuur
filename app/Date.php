@@ -258,23 +258,22 @@ class Date extends Model
      * Create new Date for a datarange
      *
      * @param MultiStoreDate $request
-     * @param $userId
      * @param $dates
      * @return static
      */
-    public static function createNewDatesFromRange(MultiStoreDate $request, $userId, $dates)
+    public static function createRange(MultiStoreDate $request, $dates)
     {
         $datesCollection = Collection::make();
+
         foreach ($dates as $date) {
             $newDate = Date::create([
                 'date_from' => $date['start'],
                 'date_to' => $date['end'],
                 'price' => $request->input('price'),
-                'published_at' => $request->input('published_at'),
-                'admin_id' => $userId,
+                'published_at' => Carbon::now()->toDateTimeString(),
+                'admin_id' => 1,
                 'status' => ($request->input('status') ?: 1)
             ]);
-
             $datesCollection->push($newDate);
         }
 

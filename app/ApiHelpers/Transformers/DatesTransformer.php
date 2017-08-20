@@ -10,11 +10,16 @@ class DatesTransformer extends Transformer
     {
         $date = new Date();
         return [
-            'start'             => $data['date_from'],
-            'end'               => $data['date_to'],
-            'status'            => $date->getLabel($data['status']),
-            'createdAt'         => $data['created_at']->toAtomString(),
-            'updatedAt'         => $data['updated_at']->toAtomString()
+            'id'                => $data['id'],
+            'start'             => $data['date_from']->toDateTimeString(),
+            'end'               => $data['date_to']->toDateTimeString(),
+            'status'            => [
+                'code' => $data['status'],
+                'label' => $date->getLabel($data['status'])
+            ],
+            'createdAt'         => $data['created_at']->toDateTimeString(),
+            'updatedAt'         => $data['updated_at']->toDateTimeString(),
+            'total_options'     => count($data['options'])
         ];
     }
 }

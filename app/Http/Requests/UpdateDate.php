@@ -25,7 +25,7 @@ class UpdateDate extends FormRequest
     public function rules()
     {
         return [
-            'date_from' => 'sometimes|date|date_format:Y-m-d H:i:s|after:tomorrow',
+            'date_from' => 'sometimes|date|date_format:Y-m-d H:i:s',
             'date_to' => 'sometimes|date|date_format:Y-m-d H:i:s|after:date_from',
             'published_at' => 'sometimes|date|date_format:Y-m-d H:i:s',
             'price' => 'sometimes|numeric',

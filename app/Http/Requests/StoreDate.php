@@ -28,7 +28,8 @@ class StoreDate extends FormRequest
             'date_to' => 'required|date|date_format:Y-m-d H:i:s|after:date_from',
             'published_at' => 'sometimes|date|date_format:Y-m-d H:i:s',
             'price' => 'required|numeric',
-            'status' => 'required|numeric'
+            'status' => 'required|numeric',
+            'admin_id' => 'integer'
         ];
     }
 }

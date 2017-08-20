@@ -36,6 +36,11 @@ Vue.component(
     require('./components/passport/PersonalAccessTokens.vue')
 );
 
+Vue.component(
+    'list-of-available-dates',
+    require('./components/frontend/Datelist.vue')
+);
+
 const app = new Vue({
     el: '#app'
 });

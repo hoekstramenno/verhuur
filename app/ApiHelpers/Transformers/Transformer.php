@@ -20,9 +20,16 @@ abstract class Transformer
      */
     public function collection(Collection $data)
     {
-        return [
-            str_plural($this->resourceName) => $data->map([$this, 'transform'])
+        $result = [
+            str_plural($this->resourceName) => []
         ];
+
+        foreach ($data->toArray() as $row) {
+            $transformed = $this->transform($row);
+            $result[str_plural($this->resourceName)][] = $transformed;
+        }
+
+        return $result;
     }
 
     /**

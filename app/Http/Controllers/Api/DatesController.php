@@ -38,7 +38,7 @@ class DatesController extends ApiController
      */
     public function index(DatesFilter $filter)
     {
-        $dates = new Paginate(Date::published()->future()->filter($filter));
+        $dates = new Paginate(Date::published()->future()->with('options')->filter($filter));
         return $this->respondWithPagination($dates);
     }
 
@@ -50,16 +50,7 @@ class DatesController extends ApiController
      */
     public function store(StoreDate $request)
     {
-        $user = auth()->user();
-        //$userId = $user->id;
-
-        // TEST ///
-        $userId = 1;
-
-        if ( ! is_null($user)) {
-            $userId = $user->id;
-        }
-        // END TEST//
+        $userId = auth()->user()->id;
 
         $date = Date::create([
             'date_from' => $request->input('date_from'),
@@ -79,26 +70,16 @@ class DatesController extends ApiController
      * @param MultiStoreDate $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function multistore(MultiStoreDate $request)
+    public function range(MultiStoreDate $request)
     {
-        $user = auth()->user();
-        //$userId = $user->id;
-
-        // TEST ///
-        $userId = 1;
-
-        if ( ! is_null($user)) {
-            $userId = $user->id;
-        }
-        // END TEST//
-
         $dateFrom = Carbon::createFromFormat('Y-m-d H:i:s', $request->input('date_from'));
         $dateTo = Carbon::createFromFormat('Y-m-d H:i:s', $request->input('date_to'));
 
         if ($request->input('only_weekend') == true) {
-            return $this->createWeekendDatesInRange($request, $dateFrom, $dateTo, $userId);
+            return $this->createWeekends($request, $dateFrom, $dateTo);
         }
-        return $this->createWeekDatesInRange($request, $dateFrom, $dateTo, $userId);
+
+        return $this->createWeeks($request, $dateFrom, $dateTo);
     }
 
     /**
@@ -109,7 +90,12 @@ class DatesController extends ApiController
      */
     public function show($id)
     {
-        $date = Date::published()->future()->findOrFail($id);
+        $date = Date::published()->future()->with('options')->find($id);
+
+        if (is_null($date)) {
+            return $this->respondNoContent();
+        }
+
         return $this->respondWithTransformer($date);
     }
 
@@ -122,7 +108,12 @@ class DatesController extends ApiController
      */
     public function update(UpdateDate $request, $id)
     {
-        $date = Date::published()->findOrFail($id);
+        $date = Date::published()->find($id);
+
+        if (is_null($date)) {
+            return $this->respondNotFound();
+        }
+
         $date->fill($request->all());
         $date->save();
 
@@ -148,10 +139,9 @@ class DatesController extends ApiController
      * @param MultiStoreDate $request
      * @param $dateFrom
      * @param $dateTo
-     * @param $userId
      * @return \Illuminate\Http\JsonResponse|static
      */
-    public function createWeekendDatesInRange(MultiStoreDate $request, $dateFrom, $dateTo, $userId)
+    public function createWeekends(MultiStoreDate $request, $dateFrom, $dateTo)
     {
         $weekends = $this->dateHelper->getOnlyTheWeekends($dateFrom, $dateTo);
 
@@ -161,9 +151,9 @@ class DatesController extends ApiController
             }
         }
 
-        $dates = Date::createNewDatesFromRange($request, $userId, $weekends);
+        Date::createRange($request, $weekends);
 
-        return $this->respondWithTransformer($dates);
+        return $this->respondSuccess();
     }
 
     /**
@@ -172,10 +162,9 @@ class DatesController extends ApiController
      * @param MultiStoreDate $request
      * @param $dateFrom
      * @param $dateTo
-     * @param $userId
      * @return \Illuminate\Http\JsonResponse|static
      */
-    public function createWeekDatesInRange(MultiStoreDate $request, $dateFrom, $dateTo, $userId)
+    public function createWeeks(MultiStoreDate $request, $dateFrom, $dateTo)
     {
         // Chunk het op in weken
         $weeks = $this->dateHelper->splitInWeeks($dateFrom, $dateTo);
@@ -186,9 +175,9 @@ class DatesController extends ApiController
             }
         }
 
-        $dates = Date::createNewDatesFromRange($request, $userId, $weeks);
+        Date::createRange($request, $weeks);
 
-        return $this->respondWithTransformer($dates);
+        return $this->respondSuccess();
     }
 
 

@@ -4,6 +4,8 @@
             <div class="title">Main</div>
             <a href="/admin/home" class="item active">
                 <span class="icon"><i class="fa fa-home"></i></span><span class="name">Dashboard</span></a>
+            <a href="/admin/dates" class="item">
+                <span class="icon"><i class="fa fa-th-list"></i></span><span class="name">Datumbeheer</span></a>
             <a href="#" class="item">
                 <span class="icon"><i class="fa fa-map-marker"></i></span><span class="name">Activity</span></a>
             <a href="#" class="item">

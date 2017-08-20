@@ -31,6 +31,7 @@ $factory->define(App\Date::class, function (Faker\Generator $faker) {
         'date_from' => Carbon::parse('+2 weeks'),
         'date_to' => Carbon::parse('+2 weeks, +1 day'),
         'price' => 520,
+        'admin_id' => 1,
         'status' => App\Date::STATUS_AVAILABLE
     ];
 });
