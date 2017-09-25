@@ -19,7 +19,13 @@ require('./bootstrap');
 //     el: '#app'
 // });
 
+//import the vue router
 
+import VueRouter from 'vue-router'
+import App from './components/App'
+
+//tell vue to use the router
+window.Vue.use(VueRouter);
 
 Vue.component(
     'passport-clients',
@@ -41,9 +47,40 @@ Vue.component(
     require('./components/frontend/Datelist.vue')
 );
 
-const app = new Vue({
-    el: '#app'
+//define your routes
+
+import DatesList from './components/frontend/Datelist'
+Vue.component('flash', require('./components/Flash.vue'));
+
+//define your routes
+const routes = [
+//define the root url of the application.
+    { path: '/', component: DatesList }
+]
+
+const router = new VueRouter({
+    routes, // short for routes: routes
+    mode: 'history'
 });
+
+
+Vue.component('flash', require('./components/Flash.vue'));
+
+
+//instatinat the vue instance
+new Vue({
+//define the selector for the root component
+    el: '#app',
+    //pass the template to the root component
+    template: '<App/>',
+    //declare components that the root component can access
+    components: { App },
+    //pass in the router to the Vue instance
+    router
+}).$mount('#app')//mount the router on the app
+
+
+
 
 
 document.addEventListener('DOMContentLoaded', function () {

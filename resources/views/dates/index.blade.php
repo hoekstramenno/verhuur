@@ -21,7 +21,7 @@
 
                 <tbody>
 
-                <list-of-available-dates></list-of-available-dates>
+                <available-dates></available-dates>
                 </tbody>
             </table>
 

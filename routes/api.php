@@ -21,9 +21,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('login', 'Api\Auth\LoginController@login');
 Route::post('refresh', 'Api\Auth\LoginController@refresh');
 
+Route::get('dates', 'Api\DatesController@index');
+Route::get('dates/{id}', 'Api\DatesController@show');
+
 Route::middleware(['auth:api'])->group(function () {
     Route::resource('dates', 'Api\DatesController', [
         'except' => [
+            'index',
+            'show',
             'create',
             'edit'
         ]

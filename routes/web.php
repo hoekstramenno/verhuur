@@ -14,7 +14,9 @@ Log::useFiles('php://stderr');
 
 Auth::routes();
 
-Route::get('/', 'DatesController@index');
+Route::get('{path}', function () {
+    return view('index');
+})->where('path', '(.*)');
 
 Route::prefix('admin')->group(function () {
     Route::get('home', 'Admin\HomeController@index');
