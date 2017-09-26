@@ -1,110 +1,43 @@
+import './bootstrap';
+import router from './routes';
 
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
+//import VueRouter from 'vue-router'
+//import DatesList from './components/frontend/Datelist'
+//import App from './components/App'
 
-require('./bootstrap');
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
 
-// Vue.component('example', require('./components/Example.vue'));
+// Vue.component(
+//     'passport-clients',
+//     require('./components/passport/Clients.vue')
+// );
 //
-// const app = new Vue({
-//     el: '#app'
-// });
+// Vue.component(
+//     'passport-authorized-clients',
+//     require('./components/passport/AuthorizedClients.vue')
+// );
+//
+// Vue.component(
+//     'passport-personal-access-tokens',
+//     require('./components/passport/PersonalAccessTokens.vue')
+// );
 
-//import the vue router
+// Vue.component(
+//     'list-of-available-dates',
+//     require('./components/frontend/Datelist.vue')
+// );
 
-import VueRouter from 'vue-router'
-import App from './components/App'
 
-//tell vue to use the router
-window.Vue.use(VueRouter);
-
-Vue.component(
-    'passport-clients',
-    require('./components/passport/Clients.vue')
-);
-
-Vue.component(
-    'passport-authorized-clients',
-    require('./components/passport/AuthorizedClients.vue')
-);
-
-Vue.component(
-    'passport-personal-access-tokens',
-    require('./components/passport/PersonalAccessTokens.vue')
-);
-
-Vue.component(
-    'list-of-available-dates',
-    require('./components/frontend/Datelist.vue')
-);
 
 //define your routes
 
-import DatesList from './components/frontend/Datelist'
-Vue.component('flash', require('./components/Flash.vue'));
 
-//define your routes
-const routes = [
-//define the root url of the application.
-    { path: '/', component: DatesList }
-]
-
-const router = new VueRouter({
-    routes, // short for routes: routes
-    mode: 'history'
-});
+//Vue.component('DatesList', require('./components/DatesList.vue'));
 
 
 Vue.component('flash', require('./components/Flash.vue'));
 
-
-//instatinat the vue instance
-new Vue({
-//define the selector for the root component
-    el: '#app',
-    //pass the template to the root component
-    template: '<App/>',
-    //declare components that the root component can access
-    components: { App },
-    //pass in the router to the Vue instance
+const app = new Vue({
+   el: '#app',
     router
-}).$mount('#app')//mount the router on the app
-
-
-
-
-
-document.addEventListener('DOMContentLoaded', function () {
-
-    // Get all "nav-burger" elements
-    var $navBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
-
-    // Check if there are any nav burgers
-    if ($navBurgers.length > 0) {
-
-        // Add a click event on each of them
-        $navBurgers.forEach(function ($el) {
-            $el.addEventListener('click', () => {
-
-                // Get the target from the "data-target" attribute
-                var target = $el.dataset.target;
-                var $target = document.getElementById(target);
-
-                // Toggle the class on both the "nav-burger" and the "nav-menu"
-                $el.classList.toggle('is-active');
-                $target.classList.toggle('is-active');
-
-            });
-        });
-    }
-
 });

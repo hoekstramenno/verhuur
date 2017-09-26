@@ -39,6 +39,7 @@ class DatesController extends ApiController
     public function index(DatesFilter $filter)
     {
         $dates = new Paginate(Date::future()->with('options')->filter($filter));
+        $dates = new Paginate(Date::with('options')->filter($filter));
 
         return $this->respondWithPagination($dates);
     }
@@ -92,6 +93,7 @@ class DatesController extends ApiController
     public function show($id)
     {
         $date = Date::published()->future()->with('options')->find($id);
+        $date = Date::published()->with('options')->find($id);
 
         if (is_null($date)) {
             return $this->respondNoContent();

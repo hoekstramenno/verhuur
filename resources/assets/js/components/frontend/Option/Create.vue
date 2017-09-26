@@ -8,10 +8,7 @@
                 <span v-text="difference"></span>
                 <span v-text="whenStart"></span>
                 <span v-text="totalOptions"></span>
-                <button type="submit" :class="classes" @click="option">
-                    <span class="glyphicon glyphicon-heart" v-text="optiontext"></span>
-
-                </button>
+                <router-link :to="link" v-text="optiontext"></router-link>
             </div>
         </div>
     </div>
@@ -32,6 +29,9 @@
             };
         },
         computed: {
+            link() {
+                return 'date/' + this.data.id;
+            },
             whenStart() {
                 return moment(this.data.start).fromNow() + '...';
             },
@@ -51,10 +51,10 @@
                 return difference + ' day(s)';
             },
             classes() {
-                return [
-                    'btn',
-                    this.active ? 'btn-primary' : 'btn-default'
-                ];
+//                return [
+//                    'btn',
+//                    this.active ? 'btn-primary' : 'btn-default'
+//                ];
             },
             signedIn() {
                 //return window.App.signedIn;

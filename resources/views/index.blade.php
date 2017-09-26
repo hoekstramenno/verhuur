@@ -7,10 +7,13 @@
   <title>{{ config('app.name') }}</title>
 
   <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+  <link rel="stylesheet" href="{{ mix('css/bulma.css') }}">
 </head>
 <body>
   <div id="app">
-
+    <router-link to="/" exact>Alle data</router-link>
+    <router-link to="data">Alle data</router-link>
+    <router-view></router-view>
   </div>
   <flash message="{{ session('flash') }}"></flash>
   @include('scripts')
