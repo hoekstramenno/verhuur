@@ -1,8 +1,8 @@
 <template>
     <div>
-    <div v-if="date.id">
-        <date :data="date"></date>
-    </div>
+
+        <create-option-form :data="date"></create-option-form>
+
 
     <ul v-if="errors && errors.length">
         <li v-for="error of errors">
@@ -14,14 +14,13 @@
 
 
 <script>
-    import Date from '../components/frontend/Option/Create.vue';
+    import CreateOptionForm from '../components/frontend/Option/Create';
 
     export default {
-        name: "datepage",
-        components: { Date },
+        name: "date-page",
+        components: {CreateOptionForm},
         data() {
             return {
-                dataSet: false,
                 apiurl: '/api/dates/',
                 date: [],
                 errors: []

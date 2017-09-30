@@ -27,7 +27,7 @@ class NotAllowedTest extends TestCase
      */
     function not_authorized_calls_return_the_right_status_code()
     {
-        $response = $this->get('/api/dates', ['HTTP_X-Requested-With' => 'XMLHttpRequest']);
+        $response = $this->get('/api/dates/1/bookings', ['HTTP_X-Requested-With' => 'XMLHttpRequest']);
 
         $response->assertStatus(401)->assertJsonFragment([
                 'error' => 'Unauthenticated.'

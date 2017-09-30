@@ -23,6 +23,10 @@ Route::post('refresh', 'Api\Auth\LoginController@refresh');
 
 Route::get('dates', 'Api\DatesController@index');
 Route::get('dates/{id}', 'Api\DatesController@show');
+Route::get('dates/{id}/options', 'Api\DatesOptionsController@create');
+Route::post('dates/{id}/options', 'Api\DatesOptionsController@store');
+Route::post('options/{id}/bookings', 'Api\OptionsBookingsController@store');
+
 
 Route::middleware(['auth:api'])->group(function () {
     Route::resource('dates', 'Api\DatesController', [
@@ -33,10 +37,7 @@ Route::middleware(['auth:api'])->group(function () {
             'edit'
         ]
     ]);
-    Route::post('dates/range', 'Api\DatesController@range');
 
-    Route::get('dates/{id}/options', 'Api\DatesOptionsController@create');
-    Route::post('dates/{id}/options', 'Api\DatesOptionsController@store');
-    Route::post('options/{id}/bookings', 'Api\OptionsBookingsController@store');
+    Route::post('dates/range', 'Api\DatesController@range');
     Route::post('logout', 'Api\Auth\LoginController@logout');
 });

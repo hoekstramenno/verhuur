@@ -1,3 +1,61 @@
+@import '~bulma/bulma.sass';
+
 body {
   padding-top: 40px;
+}
+fieldset {
+    @extend .box;
+    padding: 0;
+    box-shadow: none;
+    border: 0 none;
+    > legend {
+      @extend .label;
+      background-color: $white;
+      padding: 0 5px;
+    }
+}
+.form-group {
+  @extend .field;
+}
+.field .wrapper {
+  @extend .control;
+}
+.field-select .field-wrap {
+  @extend .select;
+}
+label {
+  @extend .label;
+}
+input[type="text"], input[type="password"], input[type="email"], input[type="number"] {
+  @extend .input;
+}
+textarea {
+  @extend .textarea;
+}
+.field-checkbox {
+  flex-direction: row;
+
+  label, .field-wrap {
+    display: inline-block;
+  }
+  label {
+    order: 2;
+  }
+  .field-wrap {
+    order: 1;
+    margin: 0 10px;
+  }
+}
+.field-submit {
+  input[type="submit"] {
+    @extend .button.is-primary;
+  }
+}
+.error {
+  input, textarea {
+    @extend .is-danger;
+  }
+  .errors.help-block {
+    @extend .help.is-danger;
+  }
 }

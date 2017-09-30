@@ -17,9 +17,10 @@ class Reservation {
      * @param $paymentToken
      * @return App
      */
-    public function toOption($paymentGateway, $paymentToken)
+    public function toOption()
     {
-        $paymentGateway->charge($this->totalCosts(), $paymentToken);
+        //$paymentGateway, $paymentToken
+        //$paymentGateway->charge($this->totalCosts(), $paymentToken);
         return Option::forDate($this->date, $this->email, $this->pax, $this->totalCosts());
     }
 

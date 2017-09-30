@@ -43,6 +43,7 @@ class OptionsBookingsController extends ApiController
      */
     public function store(StoreBooking $request, $optionId)
     {
+
         $option = Option::findOrFail($optionId);
         $date = Date::published()->findOrFail($option->date_id);
 
@@ -54,6 +55,7 @@ class OptionsBookingsController extends ApiController
             // Is it still available // Create booking
             if ($date->isStillAvailable()) {
                 $booking = Booking::forOption($option);
+                $date->updateStatus(Date::STATUS_BOOKED);
                 return response()->json($booking->toArray(), 201);
             }
 

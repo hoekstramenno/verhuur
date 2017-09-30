@@ -25,8 +25,8 @@ class StoreOption extends FormRequest
     {
         return [
             'email' => 'required|email',
-            'pax' => 'required|min:1|max:200|numeric',
-            'payment_token' => 'required'
+            'pax' => 'required|min:1|max:200|numeric'
+            //'payment_token' => 'required'
         ];
     }
 }

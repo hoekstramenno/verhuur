@@ -1,83 +1,81 @@
 <template>
-    <div :id="'date-'+id" class="panel panel-default">
-        <div class="panel-heading">
-            <div class="level">
-
-                <span v-text="startDate"></span>
-                <span v-text="endDate"></span>
-                <span v-text="difference"></span>
-                <span v-text="whenStart"></span>
-                <span v-text="totalOptions"></span>
-                <router-link :to="link" v-text="optiontext"></router-link>
-            </div>
-        </div>
+    <div>
+        <vue-form-generator :schema="schema" :model="model" :options="formOptions" @validated="onValidated"></vue-form-generator>
     </div>
 </template>
 
+
 <script>
-    //import Favorite from './Favorite.vue';
-    import moment from 'moment';
+    import VueFormGenerator from "vue-form-generator";
+
     export default {
-        props: ['data'],
-        components: {},
+        name: "createOptionForm",
+        components: {"vue-form-generator": VueFormGenerator.component},
+
         data() {
             return {
-                id: this.data.id,
-                totalOptions: this.data.total_options,
-                active: false,
-                optiontext: "Optie nemen"
-            };
-        },
-        computed: {
-            link() {
-                return 'date/' + this.data.id;
-            },
-            whenStart() {
-                return moment(this.data.start).fromNow() + '...';
-            },
-            end() {
-                return moment(this.data.end).fromNow() + '...';
-            },
-            startDate() {
-                return moment(this.data.start).format('D MMMM YYYY');
-            },
-            endDate() {
-                return moment(this.data.end).format('D MMMM YYYY');
-            },
-            difference() {
-                let start = moment(this.data.start);
-                let end = moment(this.data.end);
-                let difference = end.diff(start, 'days');
-                return difference + ' day(s)';
-            },
-            classes() {
-//                return [
-//                    'btn',
-//                    this.active ? 'btn-primary' : 'btn-default'
-//                ];
-            },
-            signedIn() {
-                //return window.App.signedIn;
-            },
-            canUpdate() {
-                //return this.authorize(user => this.data.user_id == user.id);
+                apiurl: '/api/dates/' + this.$route.params.id + '/options',
+                model: {
+                    date_id: this.$route.params.id,
+                    email: "john.doe@gmail.com",
+                    pax: 6
+                },
+
+                schema: {
+                    fields: [{
+                        type: "input",
+                        inputType: "hidden",
+                        model: "date_id",
+                        readonly: true
+                    }, {
+                        type: "input",
+                        inputType: "email",
+                        label: "E-mail",
+                        model: "email",
+                        styleClasses: 'field',
+                        placeholder: "E-mail",
+                        required: true,
+                        validator: ["email"]
+                    }, {
+                        type: "input",
+                        inputType: "number",
+                        label: "Total persons",
+                        model: "pax",
+                        placeholder: "Total Persons",
+                        styleClasses: 'field',
+                        required: true,
+                        min: 6,
+                        validator: ["number"]
+                    }, {
+                        type: "submit",
+                        buttonText: "Optie nemen",
+                        validateBeforeSubmit: true,
+                        onSubmit: this.submitForm,
+                        styleClasses: 'field',
+                        disabled() {
+                            return this.errors.length > 0;
+                        }
+                    }]
+                },
+
+                formOptions: {
+                    validateAfterLoad: false,
+                    validateAfterChanged: true
+                }
             }
         },
         methods: {
-            option() {
-                this.active ? this.destroy() : this.create();
-            },
-            create() {
-                //axios.post(this.endpoint);
-                this.active = true;
-                this.optiontext = "Optie genomen";
-                this.totalOptions++;
-            },
-            destroy() {
-                //axios.delete(this.endpoint);
-                this.active = false;
-                this.optiontext = "Optie nemen";
-                this.totalOptions--;
+            onValidated(isValid, errors) {},
+            submitForm() {
+                axios.post(this.apiurl, this.model).then(response => {
+                    this.model = {
+                        date_id: this.$route.params.id
+                    };
+                    flash('Optie genomen. Wij nemen contact op');
+                }).catch(e => {
+//                    this.date = [];
+//                    this.errors.push(e);
+                })
             }
         }
     }

@@ -13,7 +13,7 @@ class Date extends Model
 {
     use Filterable;
 
-    const STATUS_AVAILABLE    = 1;
+    const STATUS_AVAILABLE = 1;
     const STATUS_BOOKED = 2;
     const STATUS_NOT_AVAILABLE  = 3;
 
@@ -60,7 +60,7 @@ class Date extends Model
      */
     public function scopePublished($query)
     {
-        //return $query->whereNotNull('published_at');
+        return $query->whereNotNull('published_at');
     }
 
     /**
@@ -280,7 +280,11 @@ class Date extends Model
         return $datesCollection;
     }
 
-
+    public function updateStatus($status)
+    {
+        $this->status = $status;
+        $this->save();
+    }
 
 
 }

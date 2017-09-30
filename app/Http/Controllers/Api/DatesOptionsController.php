@@ -46,7 +46,8 @@ class DatesOptionsController extends ApiController
                 $reservation = $date->createReservation($date, request('pax'), request('email'));
 
                 // Create option and charge
-                $option = $reservation->toOption($this->paymentGateway, request('payment_token'));
+                //$option = $reservation->toOption($this->paymentGateway, request('payment_token'));
+                $option = $reservation->toOption();
 
                 return response()->json($option->toArray(), 201);
             }

@@ -22,7 +22,7 @@ class BookAnOptionTest extends TestCase
 
     private function bookAnOptionPost($option, $params)
     {
-        return $this->json('POST', "/options/{$option->id}/bookings", $params);
+        return $this->json('POST', "/api/options/{$option->id}/bookings", $params);
     }
 
     private function assertValidationError($response, $field)
@@ -34,6 +34,8 @@ class BookAnOptionTest extends TestCase
     /** @test */
     function admin_can_book_an_option()
     {
+        $this->passportLogin();
+
         // Arrange
         $date = factory(Date::class)->states('published')->create(
             ['price' => 500]
@@ -60,6 +62,8 @@ class BookAnOptionTest extends TestCase
      * @test */
     function admin_cannot_book_an_already_booked_option()
     {
+        $this->passportLogin();
+
         $date = factory(Date::class)->states('published')->create(
             ['price' => 500]
         );

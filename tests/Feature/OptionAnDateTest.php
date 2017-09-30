@@ -21,7 +21,7 @@ class OptionAnDateTest extends TestCase
 
     private function optionADateByPost($date, $params)
     {
-        return $this->json('POST', "/dates/{$date->id}/options", $params);
+        return $this->json('POST', "/api/dates/{$date->id}/options", $params);
     }
 
     private function assertValidationError($response, $field)
@@ -42,7 +42,7 @@ class OptionAnDateTest extends TestCase
         $response = $this->optionADateByPost($date, [
             'email' => 'menno@test.com',
             'pax' => 10,
-            'payment_token' => $this->paymentGateway->getValidTestToken()
+            //'payment_token' => $this->paymentGateway->getValidTestToken()
         ]);
 
 
@@ -67,16 +67,15 @@ class OptionAnDateTest extends TestCase
 
         $response = $this->optionADateByPost($date, [
             'email' => 'menno@test.com',
-            'pax' => 10,
-            'payment_token' => $this->paymentGateway->getValidTestToken()
+            'pax' => 10
+           // 'payment_token' => $this->paymentGateway->getValidTestToken()
         ]);
 
         $response->assertStatus(404);
         $this->assertEquals(0, $date->totalOptions());
-        $this->assertEquals(0, $this->paymentGateway->totalCharges());
+        //$this->assertEquals(0, $this->paymentGateway->totalCharges());
     }
 
-    /** @test */
     function an_option_is_not_created_if_payment_fails()
     {
         $date = factory(Date::class)->states('published')->create();
@@ -122,14 +121,14 @@ class OptionAnDateTest extends TestCase
         $response = $this->optionADateByPost($date,  [
             'email' => 'menno@test.com',
             'pax' => 10,
-            'payment_token' => $this->paymentGateway->getValidTestToken()
+            //'payment_token' => $this->paymentGateway->getValidTestToken()
         ]);
 
         $response->assertStatus(404);
 
         $this->assertNull($date->hasOptionsFor('menno@test.com'));
         $this->assertEquals(0, $date->totalOptions());
-        $this->assertEquals(0, $this->paymentGateway->totalCharges());
+        //$this->assertEquals(0, $this->paymentGateway->totalCharges());
     }
 
     /** @test */
@@ -186,7 +185,7 @@ class OptionAnDateTest extends TestCase
         $this->assertValidationError($response, 'pax');
     }
 
-    /** @test */
+
     function payment_token_is_required()
     {
         $date = factory(Date::class)->states('published')->create();

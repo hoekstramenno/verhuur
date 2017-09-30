@@ -7,7 +7,8 @@
                 <span v-text="endDate"></span>
                 <span v-text="difference"></span>
                 <span v-text="whenStart"></span>
-                <span v-text="totalOptions"></span>
+
+                <span v-if="active === true" v-text="totalOptions"></span>
                 <router-link :to="link" v-text="optiontext"></router-link>
             </div>
         </div>
@@ -15,7 +16,6 @@
 </template>
 
 <script>
-    //import Favorite from './Favorite.vue';
     import moment from 'moment';
     export default {
         props: ['data'],
@@ -61,23 +61,13 @@
             },
             canUpdate() {
                 //return this.authorize(user => this.data.user_id == user.id);
-            }
-        },
-        methods: {
-            option() {
-                this.active ? this.destroy() : this.create();
             },
-            create() {
-                //axios.post(this.endpoint);
-                this.active = true;
-                this.optiontext = "Optie genomen";
-                this.totalOptions++;
-            },
-            destroy() {
-                //axios.delete(this.endpoint);
-                this.active = false;
-                this.optiontext = "Optie nemen";
-                this.totalOptions--;
+            isActive() {
+                if (this.data.status == "2") {
+                    this.active = false;
+                    return false;
+                }
+                return true;
             }
         }
     }
