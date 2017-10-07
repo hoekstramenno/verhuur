@@ -1,8 +1,9 @@
 @import '~bulma/bulma.sass';
 
-body {
-  padding-top: 40px;
+.remark-form {
+  margin-top: 40px;
 }
+
 fieldset {
     @extend .box;
     padding: 0;

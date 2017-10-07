@@ -28,6 +28,7 @@
             @include('admin.partials.adminnav')
             <div class="content">
                 @yield('content')
+                <flash message="{{ session('flash') }}"></flash>
             </div>
         </div>
     </div>

@@ -1,10 +1,10 @@
 import './bootstrap';
-import router from './routes';
+
+//import router from './routes';
 
 //import VueRouter from 'vue-router'
 //import DatesList from './components/frontend/Datelist'
 //import App from './components/App'
-
 
 
 // Vue.component(
@@ -31,13 +31,10 @@ import router from './routes';
 
 //define your routes
 
-
-//Vue.component('DatesList', require('./components/DatesList.vue'));
-
-
+Vue.component('materiallist', require('./components/Materials.vue'));
 Vue.component('flash', require('./components/Flash.vue'));
 
 const app = new Vue({
-   el: '#app',
-    router
+   el: '#app'
+    //router
 });

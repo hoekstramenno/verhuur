@@ -5,13 +5,14 @@ use App\Http\Requests\UpdateDate;
 use Illuminate\Http\Request;
 use App\ApiHelpers\Filters\DatesFilter;
 use App\ApiHelpers\Date\Helper as DateHelper;
+use App\ApiHelpers\Paginate\Paginate as Paginate;
 //use App\Http\Requests\Api\CreateArticle;
 //use App\Http\Requests\Api\UpdateArticle;
 use App\ApiHelpers\Transformers\DatesTransformer;
-use App\ApiHelpers\Paginate\Paginate as Paginate;
 use App\Http\Requests\StoreDate;
 use App\Http\Requests\MultiStoreDate;
 use Carbon\Carbon;
+
 
 
 class DatesController extends ApiController
@@ -38,8 +39,8 @@ class DatesController extends ApiController
      */
     public function index(DatesFilter $filter)
     {
-        $dates = new Paginate(Date::future()->with('options')->filter($filter));
-        $dates = new Paginate(Date::with(['options', 'bookings'])->filter($filter));
+        $dates = new Paginate(Date::with('options')->filter($filter));
+        //$dates = new Paginate(Date::with(['options', 'bookings'])->filter($filter));
 
         return $this->respondWithPagination($dates);
     }

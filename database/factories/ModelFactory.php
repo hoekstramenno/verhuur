@@ -60,3 +60,31 @@ $factory->define(App\Option::class, function (Faker\Generator $faker) {
 $factory->define(App\Booking::class, function (Faker\Generator $faker) {
     return [];
 });
+
+$factory->define(App\Material::class, function (Faker\Generator $faker) {
+
+    return [
+        'name' => $faker->name,
+        'size' => $faker->name,
+        'qty' => $faker->randomDigitNotNull(),
+        'type_id' => function () {
+            return factory('App\MaterialType')->create()->id;
+        },
+        'brand_id' => function () {
+            return factory('App\MaterialBrand')->create()->id;
+        },
+        'created_by' => 1
+    ];
+});
+
+$factory->define(App\MaterialType::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->word()
+    ];
+});
+
+$factory->define(App\MaterialBrand::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->company()
+    ];
+});

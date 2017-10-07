@@ -51,6 +51,16 @@ class Date extends Model
         ];
     }
 
+    /**
+     * Return the total of made options for this date
+     *
+     * @return int
+     */
+    public function path()
+    {
+        return "/dates/{$this->id}";
+    }
+
 
     /**
      * Scope for published_at

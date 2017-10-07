@@ -41,3 +41,6 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('dates/range', 'Api\DatesController@range');
     Route::post('logout', 'Api\Auth\LoginController@logout');
 });
+
+
+Route::get('materials', 'Api\Magazijn\MaterialsController@index');

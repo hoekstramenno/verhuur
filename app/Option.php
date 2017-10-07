@@ -8,6 +8,7 @@ class Option extends Model
 {
     protected $guarded = [];
 
+
     /**
      * Create option for date
      * @param $date

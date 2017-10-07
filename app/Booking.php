@@ -9,6 +9,8 @@ class Booking extends Model
 {
     protected $guarded = [];
 
+    //protected $with = ['option'];
+
     /**
      * The event map for the model.
      *
@@ -31,7 +33,6 @@ class Booking extends Model
             'date_id' => $option->date_id
         ]);
     }
-
 
 
     /**
