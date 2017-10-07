@@ -1,46 +1,45 @@
-<?php namespace App\Http\Controllers\Magazijn;
+<?php namespace App\Http\Controllers\Reunie;
 
-use App\Material;
+use App\ReuniePerson;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\ApiHelpers\Filters\MaterialFilter;
+use App\ApiHelpers\Filters\Reunie\PersonFilter;
 
-class MaterialsController extends Controller
+class PersonsController extends Controller
 {
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(MaterialFilter $filters)
+    public function index(PersonFilter $filters)
     {
-        $materials = Material::get();
+        $persons = ReuniePerson::get()->paginate(20);
 
         if (request()->wantsJson()) {
-            return $materials;
+            return $persons;
         }
-        return view('magazijn.material.index', compact('materials'));
+        return view('reunie.persons.index', compact('persons'));
     }
 
     /**
      * Create new date
      *
-     * @param StoreMaterial $request
+     * @param StoreReuniePerson $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function create()
     {
-        return view('magazijn.material.create');
+        return view('reunie.material.create');
     }
 
     /**
-     * @param Material $material
+     * @param ReuniePerson $person
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show(Material $material)
+    public function show(ReuniePerson $person)
     {
-        return view('magazijn.material.show', [
-            'material' => $material,
-            'remarks' => $material->remarks()->paginate(20)
+        return view('reunie.persons.show', [
+            'person' => $person
         ]);
     }
 
@@ -51,23 +50,19 @@ class MaterialsController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required',
-            'qty' => 'required',
-            'size' => 'required',
-            //'type_id' => 'required|exists:material_type,id',
-            'brand_id' => 'required|exists:material_brand,id'
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'age' => 'required'
         ]);
 
-        $thread = Material::create([
-            'name' => $request->input('name'),
-            'size' => $request->input('size'),
-            'qty' => $request->input('qty'),
-            'created_by' => 1,
-            'type_id' => $request->input('qty'),
-            'brand_id' => $request->input('brand_id'),
+        ReuniePerson::create([
+            'firstname' => $request->input('firstname'),
+            'lastname' => $request->input('lastname'),
+            'age' => $request->input('age'),
+            'created_by' => 1
         ]);
 
-        return redirect('magazijn/materiaal/create')->with('flash', 'Your material is added');
+        return redirect('reunie/persons/create')->with('flash', 'A Person is added');
     }
 
 }

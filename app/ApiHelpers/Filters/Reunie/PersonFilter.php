@@ -1,6 +1,8 @@
-<?php namespace App\ApiHelpers\Filters;
+<?php namespace App\ApiHelpers\Filters\Reunie;
 
-class MaterialFilter extends Filter
+use App\ApiHelpers\Filters\Filter;
+
+class PersonFilter extends Filter
 {
     /**
      * Filter by author username.

@@ -1,8 +1,8 @@
-<?php namespace App\ApiHelpers\Transformers;
+<?php namespace App\ApiHelpers\Transformers\Reunie;
 
-use App\Date;
+use App\Date, App\ApiHelpers\Transformers\Transformer;
 
-class MaterialsTransformer extends Transformer
+class PersonsTransformer extends Transformer
 {
     protected $resourceName = 'material';
 
