@@ -1,52 +1,24 @@
-<?php namespace App\Http\Controllers\Api\Magazijn;
+<?php namespace App\Http\Controllers\Magazijn;
 
-use App\Date;
-use App\Http\Controllers\Api\ApiController;
-use App\Http\Requests\UpdateDate;
+use App\Material;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\ApiHelpers\Filters\MaterialFilter;
-use App\ApiHelpers\Material\Helper as Material;
-//use App\Http\Requests\Api\CreateArticle;
-//use App\Http\Requests\Api\UpdateArticle;
-use App\ApiHelpers\Transformers\MaterialsTransformer;
-use App\ApiHelpers\Paginate\Paginate as Paginate;
-use App\Http\Requests\StoreMaterial;
-use App\Http\Requests\MultiStoreDate;
-use Carbon\Carbon;
 
-class MaterialsController extends ApiController
+class MaterialsController extends Controller
 {
 
     /**
-     * @var MaterialsTransformer
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    protected $transformer;
-
-    /**
-     * @var Material
-     */
-    protected $materialHelper;
-
-    public function __construct(MaterialsTransformer $transformer, Material $materialHelper )
+    public function index(MaterialFilter $filters)
     {
-        $this->transformer = $transformer;
-        $this->materialHelper = $materialHelper;
-    }
+        $materials = Material::paginate(15);
 
-    /**
-     * Get all the dates.
-     *
-     * @param MaterialFilter $filter
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function index(MaterialFilter $filter)
-    {
-        $material = new Paginate(Material::with([
-            'brands',
-            'remarks'
-        ])->filter($filter));
-
-        return $this->respondWithPagination($material);
+        if (request()->wantsJson()) {
+            return $materials;
+        }
+        return view('magazijn.material.index', compact('materials'));
     }
 
     /**
@@ -55,20 +27,47 @@ class MaterialsController extends ApiController
      * @param StoreMaterial $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(StoreMaterial $request)
+    public function create()
     {
-        $userId = auth()->user()->id;
+        return view('magazijn.material.create');
+    }
 
-        $date = Date::create([
+    /**
+     * @param Material $material
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show(Material $material)
+    {
+        return view('magazijn.material.show', [
+            'material' => $material,
+            'remarks' => $material->remarks()->paginate(20)
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required',
+            'qty' => 'required',
+            'size' => 'required',
+            //'type_id' => 'required|exists:material_type,id',
+            'brand_id' => 'required|exists:material_brand,id'
+        ]);
+
+        $thread = Material::create([
             'name' => $request->input('name'),
             'size' => $request->input('size'),
             'qty' => $request->input('qty'),
-            'created_by' => $userId,
+            'created_by' => 1,
             'type_id' => $request->input('qty'),
             'brand_id' => $request->input('brand_id'),
         ]);
 
-        return $this->respondWithTransformer($date);
+        return redirect('magazijn/materiaal/create')->with('flash', 'Your material is added');
     }
 
 }

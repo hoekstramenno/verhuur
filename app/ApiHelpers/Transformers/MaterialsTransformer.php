@@ -2,12 +2,13 @@
 
 use App\Date;
 
-class DatesTransformer extends Transformer
+class MaterialsTransformer extends Transformer
 {
-    protected $resourceName = 'dates';
+    protected $resourceName = 'material';
 
     public function transform($data)
     {
+        return $data;
         $date = new Date();
         return [
             'id'                => $data['id'],

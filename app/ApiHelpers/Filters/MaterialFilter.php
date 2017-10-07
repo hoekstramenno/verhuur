@@ -1,9 +1,6 @@
 <?php namespace App\ApiHelpers\Filters;
 
-//use App\Tag;
-//use App\User;
-
-class DatesFilter extends Filter
+class MaterialFilter extends Filter
 {
     /**
      * Filter by author username.

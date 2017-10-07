@@ -1,4 +1,4 @@
-<?php namespace App\ApiHelpers\Date;
+<?php namespace App\ApiHelpers\Material;
 
 use Carbon\Carbon;
 

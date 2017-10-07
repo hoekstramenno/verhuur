@@ -1,27 +1,46 @@
 <template>
-    <div>
-        <header-component/>
-        <div>this is template body</div>
-        <other-component/>
-    </div>
+
+    <table>
+
+        <tr v-for="(date, index) in items" :key="date.id">
+
+        </tr>
+
+        <!--<paginator :dataSet="dataSet" @changed="fetch"></paginator>-->
+
+        <!--<new-reply @created="add"></new-reply>-->
+    </table>
+
 </template>
-<style>
-    body{
-        background-color:#ff0000;
-    }
-</style>
+
 <script>
-    import HeaderComponent from './components/header.vue'
-    import OtherComponent from './components/other.vue'
-    export default{
-        data(){
-            return{
-                msg:'hello vue'
-            }
+
+
+    export default {
+        name: "materiallist",
+
+        data() {
+            return {
+                dataSet: false,
+                url: '/api/materials',
+                items: []
+            };
         },
-        components:{
-            'other-component':OtherComponent,
-            HeaderComponent,
+        created() {
+            this.fetch();
+        },
+        methods: {
+            fetch() {
+                axios.get(this.url).then(response => {
+                    this.refresh(response);
+                });
+            },
+
+            refresh(data) {
+                this.dataSet = data.data;
+                this.items = data.data.dates;
+                window.scrollTo(0, 0);
+            }
         }
     }
 </script>

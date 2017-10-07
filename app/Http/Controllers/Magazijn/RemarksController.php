@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Magazijn;
 
-use App\Reply;
-use App\Thread;
+use App\Material;
+use App\MaterialRemark;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class RemarksController extends Controller
@@ -20,10 +21,11 @@ class RemarksController extends Controller
      */
     public function store(Material $material)
     {
-        $this->validate(request(), ['remark' => 'required']);
+        $this->validate(request(), ['body' => 'required']);
+
         $material->addRemark([
             'remark' => request('body'),
-            'user_id' => 1//auth()->id()
+            'user_id' => 1 ////auth()->id(),
         ]);
 
         return back()->with('flash', 'Your Remark is created');;
